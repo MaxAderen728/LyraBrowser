@@ -29,8 +29,8 @@ class AdBlockInterceptor(QWebEngineUrlRequestInterceptor):
 class LyraBrowser(QMainWindow):
     def __init__(self):
         super().__init__()
-        if not os.path.exists(os.path.expanduser("~/.local/share/LyraBrowser")):
-            os.mkdir(os.path.expanduser("~/.local/share/LyraBrowser"))
+        if not os.path.exists(os.path.join(os.path.expanduser("~"), ".LyraBrowser")):
+            os.mkdir(os.path.join(os.path.expanduser("~"), ".LyraBrowser"))
         self.setMinimumSize(600, 600)
         self.setWindowTitle("Lyra Browser")
         layout = QVBoxLayout()
@@ -61,7 +61,7 @@ class LyraBrowser(QMainWindow):
         store = self.profile.cookieStore()
         self.adblocker = AdBlockInterceptor()
         self.profile.setUrlRequestInterceptor(self.adblocker)
-        self.profile.setPersistentStoragePath(os.path.expanduser("~/.local/share/LyraBrowser"))
+        self.profile.setPersistentStoragePath(os.path.join(os.path.expanduser("~"), ".LyraBrowser"))
         self.profile.downloadRequested.connect(self.download)
         print(self.profile.persistentStoragePath())
         self.profile.setPersistentCookiesPolicy(QWebEngineProfile.PersistentCookiesPolicy.AllowPersistentCookies)
